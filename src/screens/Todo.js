@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 
 import Card from "../components/Card";
 import Navbar from "../components/Navbar";
+import Modal from "../components/Modal";
+
 import { getTasks } from "../api";
 
 export default function Todo() {
 	const [ joke, setJoke ] = useState("");
 	const [ isLoading, setLoading ] = useState(false);
 	const [ items, setItems ] = useState([]);
-	const [ taskCount, setTaskCount ] = useState(0)
-	useEffect(() => {
-		console.log("FIRST LOAD")	
-		console.log("TASKS: ", items)
+	const [ taskCount, setTaskCount ] = useState(0);
+	const [ showModal, setShowModal ] = useState(false);
 
+	useEffect(() => {
 		setLoading(true)
 		const fetchGoals = async () => {
 			const goals = await getTasks();
@@ -30,11 +31,11 @@ export default function Todo() {
 			})
 
 		fetchGoals();
-
 	}, [])
 
 	return (
 		<div className="flex flex-row">
+			<Modal showModal={showModal} setShowModal={setShowModal} />
 			<Navbar />
 			<div className="w-full h-screen text-center flex flex-col items-center flex-grow">
 				<div className="light-bg rounded-2xl px-12 py-4 mt-8 flex items-center justify-center max-w-lg">
@@ -51,8 +52,8 @@ export default function Todo() {
 				<div className="flex justify-start w-1/2">
 					<h1 className="text-2xl font-bold flex justify-start mt-12">Money</h1>
 				</div>
-				<div className="flex flex-row w-1/2 h-22 p-4 light-bg rounded-xl shadow-2xl mt-4" onClick={() => {
-					alert("Clicked!")
+				<div className="flex flex-row w-1/2 h-22 p-4 light-bg rounded-xl shadow-2xl mt-4 cursor-pointer" onClick={() => {
+					setShowModal(!showModal);
 				}}>
 					New Task	
 				</div>

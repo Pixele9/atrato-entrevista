@@ -10,6 +10,10 @@ body {
   background-color: #21222A;
 }
 
+.cyan-bg {
+  background-color: #4DFFF4;
+}
+
 .loader {
   border: 16px solid #5C5C62;
   border-radius: 50%;
