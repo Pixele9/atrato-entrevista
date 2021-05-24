@@ -14,6 +14,7 @@ export default function Todo() {
 	const [ items, setItems ] = useState([]);
 	const [ taskCount, setTaskCount ] = useState(0);
 	const [ showModal, setShowModal ] = useState(false);
+	const [ shouldFetch, setShoudFetch ] = useState(false);
 
 	useEffect(() => {
 		setLoading(true)
@@ -24,6 +25,12 @@ export default function Todo() {
 			setTaskCount(goals.count)
 		}
 
+		
+
+		fetchGoals();
+	}, [shouldFetch]) // check for should I re-fetch?
+
+	useEffect(() => {
 		const URL = "https://api.chucknorris.io/jokes/random";
 		fetch(URL)
 			.then(resp => resp.json())
@@ -31,18 +38,16 @@ export default function Todo() {
 				setJoke(data.value)
 				setLoading(false)
 			})
-
-		fetchGoals();
 	}, [])
 
 	return (
 		<div className="flex flex-row">
-			<Modal showModal={showModal} setShowModal={setShowModal} />
+			<Modal showModal={showModal} setShowModal={setShowModal} shouldFetch={shouldFetch} setShoudFetch={setShoudFetch} />
 			<Navbar />
-			<div className="w-full h-screen text-center flex flex-col items-center flex-grow">
+			<div className="w-full h-screen text-center flex flex-col items-center flex-grow overflow-y-auto">
 				<div className="light-bg rounded-2xl px-12 py-4 mt-8 flex items-center justify-center max-w-lg">
 					{ isLoading ? 
-						(<div class="loader"></div>)
+						(<div className="loader"></div>)
 						: (
 							<div className="flex flex-col items-start">
 								<h1 className="text-lg font-bold">Quote of the day</h1>

@@ -26,7 +26,7 @@ export default function ProgressBar(props) {
 	}
 
 	return (
-		<div className="p-4">
+		<div className="pb-4 pt-2 px-4">
 			<div style={containerStyles}>
 				<div style={fillerStyles}>
 					<span style={labelStyles}>{`${completed}%`}</span>
