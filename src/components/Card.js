@@ -1,12 +1,16 @@
 import React from 'react'
 
+import ProgressBar from './ProgressBar';
+
 export default function Card(props) {
-	const { title, description } = props
+	const { title, description, completed } = props
 	return (
-		<div className="w-3/4 h-22 light-bg rounded-xl shadow-2xl">
-			<p>{ title } </p>
-			<p>{ description } </p>
-			<div className="bg-gray-400 w-full h-1 rounded"></div>
+		<div className="w-full h-22 light-bg rounded-xl shadow-2xl flex flex-col mt-4 relative">
+			<div className="w-full flex flex-row p-4 ">
+				<p className="text-white font-bold">{ title } </p>
+				<p className="text-white font-light">{ description } </p>
+			</div>
+			<ProgressBar completed={ 30 } />
 		</div>
 	)
 }

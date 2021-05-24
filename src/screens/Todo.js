@@ -10,16 +10,17 @@ export default function Todo() {
 		title: "",
 		description: ""
 	});
-	const [ tasks, setTasks ] = useState([
-		{
-			title: "Drink Water",
-			description: "Stay hydraterd"
-		}, 
-		{
-			title: "Drink Water",
-			description: "Stay hydraterd"
-		}
-	])
+	const [ tasks, setTasks ] = useState(null)
+
+	useEffect(() => {
+		fetch("/")
+			.then(resp => resp.json())
+			.then(data => {
+				console.log("TASKS: ", data)
+				setTasks(data)
+			})
+	}, [])
+
 
 	useEffect(() => {
 		console.log("FIRST LOAD")	
@@ -42,10 +43,9 @@ export default function Todo() {
 						(<div class="loader"></div>)
 						: (
 							<div className="flex flex-col items-start">
-								<h1 className="text-white text-lg font-bold">Quote of the day</h1>
-								<p className="text-white font-light break-words">"{ joke }"</p>
-							</div>
-						)
+								<h1 className="text-lg font-bold">Quote of the day</h1>
+								<p className="font-light break-words">"{ joke }"</p>
+							</div>)
 					}
 				</div>
 
@@ -61,9 +61,11 @@ export default function Todo() {
 					setTasks({ ...tasks, task })
 				}}>New Task</button> */}
 
-				<div className="task-container flex justify-around">
+
+
+				<div className="task-container flex flex-col w-1/2 items-center mt-12">
 					{tasks.map(task => (
-						<Card title={task.title} description={task.description}/>
+						<Card title={task.title} description={task.description} complated={ 10 } />
 					))}
 				</div>
 			</div>
