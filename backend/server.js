@@ -2,9 +2,15 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
+const morgan = require("morgan");
+
 const Todo = require("./models/todo");
 
 const PORT = 5000;
+
+app.use(morgan("tiny"));
+app.use(cors());
+app.use(express.json());
 
 mongoose.connect("mongodb://127.0.0.1:27017/todos", { useNewUrlParser: true });
 
@@ -16,8 +22,8 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   Todo.find((err, todos) => {
-    if(err) console.log("ERROR: ", err)
-    else res.json(todos)
+    if(err) console.log("Andres ERROR: ", err)
+    else res.json( { todos, count: todos.length })
   })
 })
 
@@ -37,10 +43,6 @@ app.get("/:id", (req, res) => {
   Todo.findById(id, (err, todo) => {
     res.json(todo)
   })
-})
-
-app.post("/newTask", (req, res) => {
-  console.log("Data: ", req.body)
 })
 
 app.listen(5000, () => {
