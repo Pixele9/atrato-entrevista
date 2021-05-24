@@ -22,7 +22,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   Todo.find((err, todos) => {
-    if(err) console.log("Andres ERROR: ", err)
+    if(err) console.log("ERROR: ", err)
     else res.json( { todos, count: todos.length })
   })
 })
