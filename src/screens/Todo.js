@@ -4,6 +4,8 @@ import Card from "../components/Card";
 import Navbar from "../components/Navbar";
 import Modal from "../components/Modal";
 
+import AddButton from "../assets/AddButton.svg";
+
 import { getTasks } from "../api";
 
 export default function Todo() {
@@ -52,10 +54,11 @@ export default function Todo() {
 				<div className="flex justify-start w-1/2">
 					<h1 className="text-2xl font-bold flex justify-start mt-12">Money</h1>
 				</div>
-				<div className="flex flex-row w-1/2 h-22 p-4 light-bg rounded-xl shadow-2xl mt-4 cursor-pointer" onClick={() => {
+				<div className="flex flex-row items-center w-1/2 h-22 p-2 light-bg rounded-xl shadow-2xl mt-4 cursor-pointer" onClick={() => {
 					setShowModal(!showModal);
 				}}>
-					New Task	
+					<img src={AddButton} />
+					<p className="ml-4 text-lg">New Task</p>
 				</div>
 
 				{/* <input type="text" placeholder="Title" onChange={(e) => {
