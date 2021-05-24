@@ -2,29 +2,25 @@ import React, { useEffect, useState } from 'react';
 
 import Card from "../components/Card";
 import Navbar from "../components/Navbar";
+import { getTasks } from "../api";
 
 export default function Todo() {
 	const [ joke, setJoke ] = useState("");
 	const [ isLoading, setLoading ] = useState(false);
-	const [ task, setTask ] = useState({
-		title: "",
-		description: ""
-	});
-	const [ tasks, setTasks ] = useState(null)
-
-	useEffect(() => {
-		fetch("/")
-			.then(resp => resp.json())
-			.then(data => {
-				console.log("TASKS: ", data)
-				setTasks(data)
-			})
-	}, [])
-
-
+	const [ items, setItems ] = useState([]);
+	const [ taskCount, setTaskCount ] = useState(0)
 	useEffect(() => {
 		console.log("FIRST LOAD")	
+		console.log("TASKS: ", items)
+
 		setLoading(true)
+		const fetchGoals = async () => {
+			const goals = await getTasks();
+			console.log("GOALS: ", goals)
+			setItems(goals.todos)
+			setTaskCount(goals.count)
+		}
+
 		const URL = "https://api.chucknorris.io/jokes/random";
 		fetch(URL)
 			.then(resp => resp.json())
@@ -32,6 +28,9 @@ export default function Todo() {
 				setJoke(data.value)
 				setLoading(false)
 			})
+
+		fetchGoals();
+
 	}, [])
 
 	return (
@@ -49,6 +48,15 @@ export default function Todo() {
 					}
 				</div>
 
+				<div className="flex justify-start w-1/2">
+					<h1 className="text-2xl font-bold flex justify-start mt-12">Money</h1>
+				</div>
+				<div className="flex flex-row w-1/2 h-22 p-4 light-bg rounded-xl shadow-2xl mt-4" onClick={() => {
+					alert("Clicked!")
+				}}>
+					New Task	
+				</div>
+
 				{/* <input type="text" placeholder="Title" onChange={(e) => {
 					setTask({...task, title: e.target.value})
 				}}/>
@@ -61,11 +69,12 @@ export default function Todo() {
 					setTasks({ ...tasks, task })
 				}}>New Task</button> */}
 
-
-
-				<div className="task-container flex flex-col w-1/2 items-center mt-12">
-					{tasks.map(task => (
-						<Card title={task.title} description={task.description} complated={ 10 } />
+				<div className="flex justify-start w-1/2">
+					<h3 className="text-lg font-bold mt-8">Tasks - { taskCount }</h3>
+				</div>
+				<div className="task-container flex flex-col w-1/2 items-center">
+					{items.map(item => (
+						<Card key={item.id} title={item.title} description={item.description} />
 					))}
 				</div>
 			</div>

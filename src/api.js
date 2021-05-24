@@ -1,4 +1,1 @@
-export const getTasks = () => {
-	fetch("/")
-		.then(resp => resp.json)
-}
+export const getTasks = () => fetch("http://localhost:5000/").then(resp => resp.json());
