@@ -21,14 +21,14 @@ export default function Navbar() {
 
 	return (
 		<div className="light-bg w-60 h-screen px-6 py-8">
-			<div className="flex justify-center items-center gray-blue rounded p-2 cursor-pointer" onClick={() => history.push("/")}>
+			<div className="flex justify-center items-center bg-gray-600 rounded-lg p-2 cursor-pointer" onClick={() => history.push("/")}>
 				<img src={Home} />
 				<span className="ml-4">Home Page</span>
 			</div>
 			<p className="text-xl font-bold mt-8">Collections</p>	
 			<div className="flex flex-col">
 				{collections.map(coll => (
-					<div key={coll._id} className="mt-2 hover:bg-gray-500 rounded-lg py-2 px-4 cursor-pointer" onClick={() => history.push(`/todo/${coll.name.toLowerCase()}`)}>
+					<div key={coll._id} className="mt-2 hover:bg-gray-600 rounded-lg py-2 px-4 cursor-pointer" onClick={() => history.push(`/todo/${coll.name.toLowerCase()}`)}>
 						{coll.name}
 					</div>
 				))}

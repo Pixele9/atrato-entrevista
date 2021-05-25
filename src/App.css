@@ -18,6 +18,10 @@ body {
   background-color: #3B3C48;
 }
 
+.border-cyan {
+  border-color: #4DFFF4; 
+}
+
 .loader {
   border: 16px solid #5C5C62;
   border-radius: 50%;

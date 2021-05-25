@@ -68,7 +68,7 @@ export default function Todo() {
 				<div className="flex justify-start w-1/2">
 					<h1 className="text-2xl font-bold flex justify-start mt-12">Money</h1>
 				</div>
-				<div className="flex flex-row items-center w-1/2 h-22 p-2 light-bg rounded-xl shadow-2xl mt-4 cursor-pointer" onClick={() => {
+				<div className="flex flex-row items-center w-1/2 h-22 p-2 light-bg rounded-xl shadow-2xl mt-4 cursor-pointer hover:scale-105 transition-all delay-100 transform" onClick={() => {
 					setShowModal(!showModal);
 				}}>
 					<img src={AddButton} />
@@ -90,7 +90,7 @@ export default function Todo() {
 				<div className="flex justify-start w-1/2">
 					<h3 className="text-lg font-bold mt-8">Tasks - { taskCount }</h3>
 				</div>
-				<div className="task-container flex flex-col w-1/2 items-center">
+				<div className="task-container flex flex-col w-1/2 items-center mb-12">
 					{items.map(item => (
 						<Card key={item._id} id={item._id} title={item.title} description={item.description} setShowModal={setShowModal} setShouldFetch={setShouldFetch} shouldFetch={shouldFetch} />
 					))}

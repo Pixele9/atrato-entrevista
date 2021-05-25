@@ -59,7 +59,7 @@ export default function Modal(props) {
 				>
 					<animated.div
 						style={animation}
-						className="w-60 py-8 w-2/6 shadow-2xl z-10 light-bg rounded-xl relative"
+						className="py-8 w-2/6 shadow-2xl z-10 light-bg rounded-xl relative"
 					>
 						<button
 							className="textl-xl font-bold top-2 right-2 absolute outline-none"
