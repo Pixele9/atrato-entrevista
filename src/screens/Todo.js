@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router-dom";
 
 import Card from "../components/Card";
 import Navbar from "../components/Navbar";
@@ -16,12 +17,14 @@ export default function Todo() {
 	const [ showModal, setShowModal ] = useState(false);
 	const [ shouldFetch, setShouldFetch ] = useState(false);
 
+	const { id: collectionID, name: collectionName } = useParams();
+
 	useEffect(() => {
 		if(shouldFetch) {
 			console.log("FETCH?? ", shouldFetch)
 			setLoading(true)
 			const fetchGoals = async () => {
-				const goals = await getTasks();
+				const goals = await getTasks(collectionID);
 				console.log("GOALS: ", goals)
 				setItems(goals.todos)
 				setTaskCount(goals.count)
@@ -29,11 +32,21 @@ export default function Todo() {
 			fetchGoals();
 			setShouldFetch(false);
 		}
-	}, [shouldFetch, setShouldFetch]) // check for should I re-fetch?
+	}, [shouldFetch, setShouldFetch, collectionID]) // check for should I re-fetch?
 
 	useEffect(() => {
 		const fetchGoals = async () => {
-			const goals = await getTasks();
+			const goals = await getTasks(collectionID);
+			console.log("GOALS: ", goals)
+			setItems(goals.todos)
+			setTaskCount(goals.count)
+		}
+		fetchGoals();
+	}, [collectionID, collectionName])
+
+	useEffect(() => {
+		const fetchGoals = async () => {
+			const goals = await getTasks(collectionID);
 			console.log("GOALS: ", goals)
 			setItems(goals.todos)
 			setTaskCount(goals.count)
@@ -66,7 +79,7 @@ export default function Todo() {
 				</div>
 
 				<div className="flex justify-start w-1/2">
-					<h1 className="text-2xl font-bold flex justify-start mt-12">Money</h1>
+					<h1 className="text-2xl font-bold flex justify-start mt-12">{ collectionName.charAt(0).toUpperCase() + collectionName.slice(1) }</h1>
 				</div>
 				<div className="flex flex-row items-center w-1/2 h-22 p-2 light-bg rounded-xl shadow-2xl mt-4 cursor-pointer hover:scale-105 transition-all delay-100 transform" onClick={() => {
 					setShowModal(!showModal);

@@ -17,7 +17,7 @@ export default function App() {
       <div className="">
         <Switch>
           <Route exact path="/" component={Home}/>
-          <Route exact path="/todos" component={Todo} />
+          <Route exact path="/:name/:id" component={Todo} />
         </Switch>
       </div>
     </Router>

@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 
-import { createTask } from "../api";
+import { createTask, getCollections } from "../api";
 
 export default function Modal(props) {
 	const { showModal, setShowModal, setShouldFetch } = props;
 	const modalRef = useRef();
 
+	const [collections, setCollections] = useState([]);
+
 	const [task, setTask] = useState({
 		title: "",
 		description: "",
+		category: "", // collection
 	});
 
 	const animation = useSpring({
@@ -39,15 +42,25 @@ export default function Modal(props) {
 		return () => document.removeEventListener("keydown", keyPress);
 	}, [keyPress]);
 
+	useEffect(() => {
+		const fetchCollections = async () => {
+			const colls = await getCollections();
+			console.log("Colls: ", collections);
+			setCollections(colls);
+		};
+		fetchCollections();
+	}, []);
+
 	function newTask(data) {
 		console.log("CALLING new Task");
 		if (data.title === "" || data.description === "") {
 			alert("Please fill the required data");
 		} else {
+			console.log("DATA to create task: ", data);
 			createTask(data);
-			console.log("New task created")
+			console.log("New task created");
 		}
-	};
+	}
 
 	return (
 		<>
@@ -88,17 +101,37 @@ export default function Modal(props) {
 									});
 								}}
 							/>
+							<select
+								class="border-2 border-gray-500 rounded-lg mt-2 text-gray-400 h-10 pl-2 pr-10 light-bg hover:border-gray-400 focus:outline-none appearance-none"
+								onChange={(e) => {
+									setTask({
+										...task,
+										category: e.target.value,
+									})
+									console.log("TASK: ", e.target.value)
+								}}
+							>
+								<option selected>Choose a Collection</option>
+								{collections.map((el) => (
+									<option value={el._id}>{el.name}</option>
+								))}
+							</select>
 						</div>
 
 						<button
 							className="px-4 py-2 rounded-xl cyan-bg text-black mt-4 outline-none"
 							onClick={() => {
-								if(task.title === "" || task.description === "") {
-									alert("Please fill the required information")
+								if (
+									task.title === "" ||
+									task.description === ""
+								) {
+									alert(
+										"Please fill the required information"
+									);
 								} else {
-									newTask(task)
-									setShowModal(false)
-									setShouldFetch(true)
+									newTask(task);
+									setShowModal(false);
+									setShouldFetch(true);
 								}
 							}}
 							// onClick={newTask(task)}

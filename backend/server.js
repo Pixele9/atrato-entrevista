@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 const ObjectID = require('mongodb').ObjectID;
 const morgan = require("morgan");
 
-const Todo = require("./models/todo");
-const Collection = require("./models/collection");
+const Models = require("./models/todo");
+// const Collection = require("./models/collection");
 
 const PORT = 5000;
 
@@ -21,7 +21,7 @@ mongoose.connection.once("open", () => {
 })
 
 app.get("/collections", async (req, res) => {
-  const collections = await Collection.find({})
+  const collections = await Models.Collection.find({})
   res.json(collections)
   // Collection.find({}, (err, collections) => {
   //   if(err) console.log("ERROR: ", err)
@@ -29,15 +29,17 @@ app.get("/collections", async (req, res) => {
   // })
 })
 
-app.get("/", (req, res) => {
-  Todo.find((err, todos) => {
+// Fetch all tasks from a collection
+app.get("/:id", (req, res) => {
+  const id = req.params.id
+  Models.Todo.find({ category: id }, (err, todos) => {
     if(err) console.log("ERROR: ", err)
     else res.json({ todos, count: todos.length })
   })
 })
 
 app.post("/create", (req, res) => {
-  const todo = new Todo(req.body);
+  const todo = new Models.Todo(req.body);
   todo.save()
     .then((todo) => {
       res.json(todo);
@@ -47,16 +49,16 @@ app.post("/create", (req, res) => {
     })
 })
 
-app.get("/:id", (req, res) => {
-  const id = req.params.id;
-  Todo.findById(id, (err, todo) => {
-    res.json(todo)
-  })
-})
+//default app.get("/:id", (req, res) => {
+//   const id = req.params.id;
+//   Models.Todo.findById(id, (err, todo) => {
+//     res.json(todo)
+//   })
+// })
 
 app.delete("/:id", (req, res) => {
   const id = req.params.id;
-  Todo.deleteOne({ _id: ObjectID(id) }, (err) => {
+  Models.Todo.deleteOne({ _id: ObjectID(id) }, (err) => {
     if(err) console.log("Error deleting task: ", err)
     else console.log("Succesfull detetion")
   })

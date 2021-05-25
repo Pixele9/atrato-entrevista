@@ -28,7 +28,7 @@ export default function Navbar() {
 			<p className="text-xl font-bold mt-8">Collections</p>	
 			<div className="flex flex-col">
 				{collections.map(coll => (
-					<div key={coll._id} className="mt-2 hover:bg-gray-600 rounded-lg py-2 px-4 cursor-pointer" onClick={() => history.push(`/todo/${coll.name.toLowerCase()}`)}>
+					<div key={coll._id} className="mt-2 hover:bg-gray-600 rounded-lg py-2 px-4 cursor-pointer" onClick={() => history.push(`/${coll.name}/${coll._id}`)}>
 						{coll.name}
 					</div>
 				))}
