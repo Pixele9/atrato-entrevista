@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Home from "../assets/Home.svg";
 import { useHistory } from "react-router-dom";
 
+import { getCollections } from '../api';
+
 export default function Navbar() {
 	const history = useHistory();
+	const [ collections, setCollections ] = useState([]);
+
+	useEffect(() => {
+		console.log("Collections: ", collections)
+		const fetchCollections = async () => {
+			const colls = await getCollections();
+			console.log("Colls: ", collections)
+			setCollections(colls);
+		}
+		fetchCollections()
+	}, [])
 
 	return (
 		<div className="light-bg w-60 h-screen px-6 py-8">
@@ -13,6 +26,13 @@ export default function Navbar() {
 				<span className="ml-4">Home Page</span>
 			</div>
 			<p className="text-xl font-bold mt-8">Collections</p>	
+			<div className="flex flex-col">
+				{collections.map(coll => (
+					<div key={coll._id} className="mt-2 hover:bg-gray-500 rounded-lg py-2 px-4 cursor-pointer" onClick={() => history.push(`/todo/${coll.name.toLowerCase()}`)}>
+						{coll.name}
+					</div>
+				))}
+			</div>
 		</div>
 	)
 }

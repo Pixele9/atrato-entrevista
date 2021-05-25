@@ -4,7 +4,7 @@ import { useSpring, animated } from "react-spring";
 import { createTask } from "../api";
 
 export default function Modal(props) {
-	const { showModal, setShowModal, setShoudFetch } = props;
+	const { showModal, setShowModal, setShouldFetch } = props;
 	const modalRef = useRef();
 
 	const [task, setTask] = useState({
@@ -67,7 +67,7 @@ export default function Modal(props) {
 						>
 							X
 						</button>
-						<p className="font-bold text-lg">New Task</p>
+						<p className="font-bold text-lg">Task</p>
 						<div className="flex flex-col px-4 mt-4">
 							<input
 								type="text"
@@ -98,7 +98,7 @@ export default function Modal(props) {
 								} else {
 									newTask(task)
 									setShowModal(false)
-									setShoudFetch(true)
+									setShouldFetch(true)
 								}
 							}}
 							// onClick={newTask(task)}

@@ -14,23 +14,32 @@ export default function Todo() {
 	const [ items, setItems ] = useState([]);
 	const [ taskCount, setTaskCount ] = useState(0);
 	const [ showModal, setShowModal ] = useState(false);
-	const [ shouldFetch, setShoudFetch ] = useState(false);
+	const [ shouldFetch, setShouldFetch ] = useState(false);
 
 	useEffect(() => {
-		setLoading(true)
+		if(shouldFetch) {
+			console.log("FETCH?? ", shouldFetch)
+			setLoading(true)
+			const fetchGoals = async () => {
+				const goals = await getTasks();
+				console.log("GOALS: ", goals)
+				setItems(goals.todos)
+				setTaskCount(goals.count)
+			}
+			fetchGoals();
+			setShouldFetch(false);
+		}
+	}, [shouldFetch, setShouldFetch]) // check for should I re-fetch?
+
+	useEffect(() => {
 		const fetchGoals = async () => {
 			const goals = await getTasks();
 			console.log("GOALS: ", goals)
 			setItems(goals.todos)
 			setTaskCount(goals.count)
 		}
-
-		
-
 		fetchGoals();
-	}, [shouldFetch]) // check for should I re-fetch?
 
-	useEffect(() => {
 		const URL = "https://api.chucknorris.io/jokes/random";
 		fetch(URL)
 			.then(resp => resp.json())
@@ -42,7 +51,7 @@ export default function Todo() {
 
 	return (
 		<div className="flex flex-row">
-			<Modal showModal={showModal} setShowModal={setShowModal} shouldFetch={shouldFetch} setShoudFetch={setShoudFetch} />
+			<Modal showModal={showModal} setShowModal={setShowModal} shouldFetch={shouldFetch} setShouldFetch={setShouldFetch} />
 			<Navbar />
 			<div className="w-full h-screen text-center flex flex-col items-center flex-grow overflow-y-auto">
 				<div className="light-bg rounded-2xl px-12 py-4 mt-8 flex items-center justify-center max-w-lg">
@@ -83,7 +92,7 @@ export default function Todo() {
 				</div>
 				<div className="task-container flex flex-col w-1/2 items-center">
 					{items.map(item => (
-						<Card key={item.id} title={item.title} description={item.description} />
+						<Card key={item._id} id={item._id} title={item.title} description={item.description} setShowModal={setShowModal} setShouldFetch={setShouldFetch} shouldFetch={shouldFetch} />
 					))}
 				</div>
 			</div>
