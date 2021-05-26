@@ -8,7 +8,7 @@ import Remove from "../assets/Remove.svg";
 import { removeTask } from "../api";
 
 export default function Card(props) {
-	const { title, description, id, setShouldFetch, setShowModal } = props;
+	const { title, description, id, setShouldFetch, setShowUpdateModal } = props;
 
 	const [checked, setChecked] = useState(false);
 
@@ -36,7 +36,7 @@ export default function Card(props) {
 							alt="Edit button"
 							className="cursor-pointer"
 							onClick={async () => {
-								setShowModal(true);
+								setShowUpdateModal(true);
 							}}
 						/>
 						<img

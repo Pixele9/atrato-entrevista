@@ -15,3 +15,14 @@ export const createTask = (todo) => {
 		body: JSON.stringify(todo)
 	})
 }
+
+export const updateTask = (id, todo) => {
+	fetch(`http://localhost:500/${id}`, {
+		method: "PUT",
+		headers: {
+			"Accept": "application/json",
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(todo)
+	})
+}

@@ -3,8 +3,8 @@ import { useSpring, animated } from "react-spring";
 
 import { createTask, getCollections } from "../api";
 
-export default function Modal(props) {
-	const { showModal, setShowModal, setShouldFetch } = props;
+export default function UpdateModal(props) {
+	const { showUpdateModal, setShowUpdateModal, setShouldFetch } = props;
 	const modalRef = useRef();
 
 	const [collections, setCollections] = useState([]);
@@ -19,22 +19,22 @@ export default function Modal(props) {
 		config: {
 			duration: 100,
 		},
-		opacity: showModal ? 1 : 0,
-		transform: showModal ? `translateY(0%)` : `translateY(-100%)`,
+		opacity: showUpdateModal ? 1 : 0,
+		transform: showUpdateModal ? `translateY(0%)` : `translateY(-100%)`,
 	});
 
 	const closeModal = (e) => {
 		if (modalRef.current === e.target) {
 			console.log("target: ", e.target);
-			setShowModal(false);
+			setShowUpdateModal(false);
 		}
 	};
 
 	const keyPress = useCallback(
 		(e) => {
-			if (e.key === "Escape" && showModal) setShowModal(false);
+			if (e.key === "Escape" && showUpdateModal) setShowUpdateModal(false);
 		},
-		[showModal, setShowModal]
+		[showUpdateModal, setShowUpdateModal]
 	);
 
 	useEffect(() => {
@@ -51,7 +51,7 @@ export default function Modal(props) {
 		fetchCollections();
 	}, []);
 
-	function newTask(data) {
+	function updateTask(data) {
 		console.log("CALLING new Task");
 		if (data.title === "" || data.description === "") {
 			alert("Please fill the required data");
@@ -64,7 +64,7 @@ export default function Modal(props) {
 
 	return (
 		<>
-			{showModal ? (
+			{showUpdateModal ? (
 				<div
 					ref={modalRef}
 					onClick={closeModal}
@@ -76,11 +76,11 @@ export default function Modal(props) {
 					>
 						<button
 							className="textl-xl font-bold top-2 right-2 absolute outline-none"
-							onClick={() => setShowModal(!showModal)}
+							onClick={() => setShowUpdateModal(!showUpdateModal)}
 						>
 							X
 						</button>
-						<p className="font-bold text-lg">Add Task</p>
+						<p className="font-bold text-lg">Edit Task</p>
 						<div className="flex flex-col px-4 mt-4">
 							<input
 								type="text"
@@ -129,8 +129,8 @@ export default function Modal(props) {
 										"Please fill the required information"
 									);
 								} else {
-									newTask(task);
-									setShowModal(false);
+									updateTask(task);
+									setShowUpdateModal(false);
 									setShouldFetch(true);
 								}
 							}}
