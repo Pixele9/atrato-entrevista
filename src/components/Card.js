@@ -5,7 +5,7 @@ import ProgressBar from "./ProgressBar";
 import Edit from "../assets/Edit.svg";
 import Remove from "../assets/Remove.svg";
 
-import { removeTask, updateTask } from "../api";
+import { removeTask } from "../api";
 
 export default function Card(props) {
 	const { title, description, id, setShouldFetch, setShowUpdateModal, setUpdateID } = props;

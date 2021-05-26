@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 
-import { updateTask, getCollections } from "../api";
+import { updateTask, getCollections, getTask } from "../api";
 
 export default function UpdateModal(props) {
 	const { showUpdateModal, setShowUpdateModal, setShouldFetch, updateID } = props;
@@ -41,6 +41,19 @@ export default function UpdateModal(props) {
 		document.addEventListener("keydown", keyPress);
 		return () => document.removeEventListener("keydown", keyPress);
 	}, [keyPress]);
+
+	useEffect(() => {
+		const fetchTask = async (id) => {
+			const mongoTask = await getTask(id);
+			setTask({
+				title: mongoTask.title,
+				description: mongoTask.description,
+				category: mongoTask.category
+			})
+		};
+		fetchTask(updateID);
+
+	}, [updateID])
 
 	useEffect(() => {
 		const fetchCollections = async () => {
@@ -85,6 +98,7 @@ export default function UpdateModal(props) {
 								type="text"
 								className="border-2 border-gray-500 rounded-lg p-2 light-bg outline-none"
 								placeholder="Title"
+								value={task.title}
 								onChange={(e) => {
 									setTask({ ...task, title: e.target.value });
 								}}
@@ -93,6 +107,7 @@ export default function UpdateModal(props) {
 								type="text"
 								className="border-2 border-gray-500 rounded-lg p-2 mt-2 light-bg outline-none"
 								placeholder="Description"
+								value={task.description}
 								onChange={(e) => {
 									setTask({
 										...task,
