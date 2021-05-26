@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 
-import { createTask, getCollections } from "../api";
+import { updateTask, getCollections } from "../api";
 
 export default function UpdateModal(props) {
-	const { showUpdateModal, setShowUpdateModal, setShouldFetch } = props;
+	const { showUpdateModal, setShowUpdateModal, setShouldFetch, updateID } = props;
 	const modalRef = useRef();
 
 	const [collections, setCollections] = useState([]);
@@ -51,14 +51,13 @@ export default function UpdateModal(props) {
 		fetchCollections();
 	}, []);
 
-	function updateTask(data) {
-		console.log("CALLING new Task");
+	function callUpdateTask(id, data) {
 		if (data.title === "" || data.description === "") {
 			alert("Please fill the required data");
 		} else {
 			console.log("DATA to create task: ", data);
-			createTask(data);
-			console.log("New task created");
+			updateTask(id, data);
+			console.log("Task has been updated");
 		}
 	}
 
@@ -120,7 +119,7 @@ export default function UpdateModal(props) {
 
 						<button
 							className="px-4 py-2 rounded-xl cyan-bg text-black mt-4 outline-none"
-							onClick={() => {
+							onClick={async () => {
 								if (
 									task.title === "" ||
 									task.description === ""
@@ -129,14 +128,15 @@ export default function UpdateModal(props) {
 										"Please fill the required information"
 									);
 								} else {
-									updateTask(task);
+									const resp = await callUpdateTask(updateID, task);
+									console.log("RESPPPP:: ", resp)
 									setShowUpdateModal(false);
 									setShouldFetch(true);
 								}
 							}}
 							// onClick={newTask(task)}
 						>
-							Add Task
+							Update Task
 						</button>
 					</animated.div>
 				</div>

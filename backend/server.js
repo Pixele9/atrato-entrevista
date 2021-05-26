@@ -30,7 +30,7 @@ app.get("/collections", async (req, res) => {
 })
 
 // Fetch all tasks from a collection
-app.get("/:id", (req, res) => {
+app.get("/collections/:id", (req, res) => {
   const id = req.params.id
   Models.Todo.find({ category: id }, (err, todos) => {
     if(err) console.log("ERROR: ", err)
@@ -49,12 +49,12 @@ app.post("/create", (req, res) => {
     })
 })
 
-//default app.get("/:id", (req, res) => {
-//   const id = req.params.id;
-//   Models.Todo.findById(id, (err, todo) => {
-//     res.json(todo)
-//   })
-// })
+app.get("/:id", (req, res) => {
+  const id = req.params.id;
+  Models.Todo.findById(id, (err, todo) => {
+    res.json(todo)
+  })
+})
 
 app.delete("/:id", (req, res) => {
   const id = req.params.id;
@@ -64,16 +64,19 @@ app.delete("/:id", (req, res) => {
   })
 })
 
-// // COLLECTIONS
-// app.get("/collections", async (req, res) => {
-//   // const collections = await Collection.find({})
-//   // console.log(collections)
-//   // res.json(collections)
-//   Collection.find((err, collections) => {
-//     if(err) console.log("ERROR: ", err)
-//     else res.json({ collections, count: collections.length })
-//   })
-// })
+app.put("/:id", async (req, res) => {
+  const id = req.params.id;
+  let task = await Models.Todo.findById(id);
+
+  if(!task) res.json({ message: "No task available" })
+  else {
+    task = await Models.Todo.findOneAndUpdate({ _id: id }, req.body, {
+      new: true,
+      runValidators: true
+    })
+    return res.status(204)
+  }
+})
 
 app.post("/newCollection", (req, res) => {
   const collection = new Collection(req.body);

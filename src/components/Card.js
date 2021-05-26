@@ -5,10 +5,10 @@ import ProgressBar from "./ProgressBar";
 import Edit from "../assets/Edit.svg";
 import Remove from "../assets/Remove.svg";
 
-import { removeTask } from "../api";
+import { removeTask, updateTask } from "../api";
 
 export default function Card(props) {
-	const { title, description, id, setShouldFetch, setShowUpdateModal } = props;
+	const { title, description, id, setShouldFetch, setShowUpdateModal, setUpdateID } = props;
 
 	const [checked, setChecked] = useState(false);
 
@@ -37,6 +37,7 @@ export default function Card(props) {
 							className="cursor-pointer"
 							onClick={async () => {
 								setShowUpdateModal(true);
+								setUpdateID(id)
 							}}
 						/>
 						<img

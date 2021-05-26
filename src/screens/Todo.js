@@ -18,6 +18,7 @@ export default function Todo() {
 	const [ showModal, setShowModal ] = useState(false);
 	const [ showUpdateModal, setShowUpdateModal ] = useState(false);
 	const [ shouldFetch, setShouldFetch ] = useState(false);
+	const [ updateID, setUpdateID ] = useState("");
 
 	const { id: collectionID, name: collectionName } = useParams();
 
@@ -69,7 +70,7 @@ export default function Todo() {
 	return (
 		<div className="flex flex-row">
 			<Modal showModal={showModal} setShowModal={setShowModal} shouldFetch={shouldFetch} setShouldFetch={setShouldFetch} />
-			<UpdateModal showUpdateModal={showUpdateModal} setShowUpdateModal={setShowUpdateModal} shouldFetch={shouldFetch} setShouldFetch={setShouldFetch} />
+			<UpdateModal showUpdateModal={showUpdateModal} setShowUpdateModal={setShowUpdateModal} shouldFetch={shouldFetch} setShouldFetch={setShouldFetch} updateID={updateID} />
 			<Navbar />
 			<div className="w-full h-screen text-center flex flex-col items-center flex-grow overflow-y-auto">
 				<div className="light-bg rounded-2xl px-12 py-4 mt-8 flex items-center justify-center max-w-lg">
@@ -110,7 +111,7 @@ export default function Todo() {
 				</div>
 				<div className="task-container flex flex-col w-1/2 items-center mb-12">
 					{items.map(item => (
-						<Card key={item._id} id={item._id} title={item.title} description={item.description} setShowUpdateModal={setShowUpdateModal} setShouldFetch={setShouldFetch} shouldFetch={shouldFetch} />
+						!item.done && <Card key={item._id} id={item._id} title={item.title} description={item.description} setShowUpdateModal={setShowUpdateModal} setShouldFetch={setShouldFetch} shouldFetch={shouldFetch} setUpdateID={setUpdateID} />
 					))}
 				</div>
 			</div>
