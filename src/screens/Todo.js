@@ -20,7 +20,7 @@ export default function Todo() {
 	const [ shouldFetch, setShouldFetch ] = useState(false);
 	const [ updateID, setUpdateID ] = useState("");
 
-	const { id: collectionID, name: collectionName } = useParams();
+	const {  id: collectionID, name: collectionName } = useParams();
 
 	useEffect(() => {
 		if(shouldFetch) {
@@ -50,6 +50,7 @@ export default function Todo() {
 
 	// Hanlde on component mount fetch
 	useEffect(() => {
+		console.log("collectionID: ", collectionID)
 		const fetchGoals = async () => {
 			const goals = await getTasks(collectionID);
 			console.log("GOALS: ", goals)
