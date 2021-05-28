@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useParams } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 
 import { createTask, getCollections } from "../api";
 
 export default function Modal(props) {
-	const { showModal, setShowModal, setShouldFetch } = props;
+	const { showModal, setShowModal, setShouldFetch, modifierName } = props;
 	const modalRef = useRef();
 
 	const [collections, setCollections] = useState([]);
+	const {  id: collectionID } = useParams();
 
 	const [task, setTask] = useState({
 		title: "",
 		description: "",
-		category: "", // collection
+		category: collectionID, // collection
 	});
 
 	const animation = useSpring({
@@ -41,6 +43,10 @@ export default function Modal(props) {
 		document.addEventListener("keydown", keyPress);
 		return () => document.removeEventListener("keydown", keyPress);
 	}, [keyPress]);
+
+	useEffect(() => {
+		setTask({ ...task, category: collectionID })
+	}, [collectionID])
 
 	useEffect(() => {
 		const fetchCollections = async () => {
@@ -80,7 +86,7 @@ export default function Modal(props) {
 						>
 							X
 						</button>
-						<p className="font-bold text-lg">Add Task</p>
+						<p className="font-bold text-lg">Add { modifierName }</p>
 						<div className="flex flex-col px-4 mt-4">
 							<input
 								type="text"
@@ -101,7 +107,7 @@ export default function Modal(props) {
 									});
 								}}
 							/>
-							<select
+							{/* <select
 								class="border-2 border-gray-500 rounded-lg mt-2 text-gray-400 h-10 pl-2 pr-10 light-bg hover:border-gray-400 focus:outline-none appearance-none"
 								onChange={(e) => {
 									setTask({
@@ -115,7 +121,7 @@ export default function Modal(props) {
 								{collections.map((el) => (
 									<option key={el._id} value={el._id}>{el.name}</option>
 								))}
-							</select>
+							</select> */}
 						</div>
 
 						<button
@@ -136,7 +142,7 @@ export default function Modal(props) {
 							}}
 							// onClick={newTask(task)}
 						>
-							Add Task
+							Add  { modifierName }
 						</button>
 					</animated.div>
 				</div>

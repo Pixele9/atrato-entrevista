@@ -4,7 +4,7 @@ import { useSpring, animated } from "react-spring";
 import { updateTask, getCollections, getTask } from "../api";
 
 export default function UpdateModal(props) {
-	const { showUpdateModal, setShowUpdateModal, setShouldFetch, updateID } = props;
+	const { showUpdateModal, setShowUpdateModal, setShouldFetch, updateID, updateName } = props;
 	const modalRef = useRef();
 
 	const [collections, setCollections] = useState([]);

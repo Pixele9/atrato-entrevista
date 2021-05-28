@@ -70,8 +70,8 @@ export default function Todo() {
 
 	return (
 		<div className="flex flex-row">
-			<Modal showModal={showModal} setShowModal={setShowModal} shouldFetch={shouldFetch} setShouldFetch={setShouldFetch} />
-			<UpdateModal showUpdateModal={showUpdateModal} setShowUpdateModal={setShowUpdateModal} shouldFetch={shouldFetch} setShouldFetch={setShouldFetch} updateID={updateID} />
+			<Modal showModal={showModal} setShowModal={setShowModal} shouldFetch={shouldFetch} setShouldFetch={setShouldFetch} modifierName="Task" />
+			<UpdateModal showUpdateModal={showUpdateModal} setShowUpdateModal={setShowUpdateModal} shouldFetch={shouldFetch} setShouldFetch={setShouldFetch} updateID={updateID} updateName="Task"/>
 			<Navbar />
 			<div className="w-full h-screen text-center flex flex-col items-center flex-grow overflow-y-auto">
 				<div className="light-bg rounded-2xl px-12 py-4 mt-8 flex items-center justify-center max-w-lg">

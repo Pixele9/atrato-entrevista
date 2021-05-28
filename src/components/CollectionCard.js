@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 
-import Edit from "../assets/Edit.svg";
 import Remove from "../assets/Remove.svg";
 
 import { removeTask } from "../api";
@@ -17,25 +16,17 @@ export default function CollectionCard(props) {
 			<div className="w-full flex flex-row justify-between py-2 px-4">
 				<div className="w-full flex flex-row justify-between py-2 px-4">
 					<div className="flex flex-col items-start">
-						<p className="text-white font-bold">{title} </p>
+						<p className="text-white text-xl font-bold">{title} </p>
 						<p className="text-white font-light">{description} </p>
 					</div>
 					<div className="flex flex-row justify-evenly items-center w-24">
-						<img
-							src={Edit}
-							alt="Edit button"
-							className="cursor-pointer"
-							onClick={async () => {
-								setShowUpdateModal(true);
-								setUpdateID(id)
-							}}
-						/>
 						<img
 							src={Remove}
 							alt="Remove button"
 							className="cursor-pointer p-4"
 							onClick={async () => {
 								setShouldFetch(true);
+								setUpdateID(id);
 								removeTask(id);
 							}}
 						/>

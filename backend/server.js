@@ -60,7 +60,7 @@ app.delete("/:id", (req, res) => {
   const id = req.params.id;
   Models.Todo.deleteOne({ _id: ObjectID(id) }, (err) => {
     if(err) console.log("Error deleting task: ", err)
-    else console.log("Succesfull detetion")
+    else console.log("Succesfull deletion")
   })
 })
 
@@ -87,6 +87,14 @@ app.post("/newCollection", (req, res) => {
     .catch(err => {
       console.log("Error saving collection: ", err)
     })
+})
+
+app.delete("/collection/:id", (req, res) => {
+  const id = req.params.id;
+  Models.Collections.deleteOne({ _id: ObjectID(id) }, (err) => {
+    if(err) console.log("Error deleting task: ", err)
+    else console.log("Succesfull deletion")
+  })
 })
 
 app.listen(5000, () => {
