@@ -8,7 +8,7 @@ export default function Home() {
 	return (
 		<div className="w-full h-screen">
 			<div className="w-full bg-blue-200">
-				<button onClick={() => history.push("/todos")}>Take me to my TO-DOs</button>
+				<button onClick={() => history.push("/collections")}>Take me to my TO-DOs</button>
 			</div>
 		</div>
 	)
