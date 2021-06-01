@@ -12,7 +12,7 @@ export default function CollectionCard(props) {
 	const history = useHistory();
 
 	return (
-		<div className="w-full h-22 light-bg rounded-xl shadow-2xl flex flex-col mt-4 max-w-5xl" onClick={() => history.push(`/${routeName}/${routeID}`)}>
+		<div className="w-full h-22 light-bg rounded-xl shadow-2xl flex flex-col mt-4 max-w-5xl cursor-pointer" onClick={() => history.push(`/${routeName}/${routeID}`)}>
 			<div className="w-full flex flex-row justify-between py-2 px-4">
 				<div className="w-full flex flex-row justify-between py-2 px-4">
 					<div className="flex flex-col items-start">

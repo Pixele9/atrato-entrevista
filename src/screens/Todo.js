@@ -21,11 +21,11 @@ export default function Todo() {
 	const [ shouldFetch, setShouldFetch ] = useState(false);
 	const [ updateID, setUpdateID ] = useState("");
 
-	const {  id: collectionID, name: collectionName } = useParams();
+	const { id: collectionID, name: collectionName } = useParams();
 
 	useEffect(() => {
 		if(shouldFetch) {
-			console.log("FETCH?? ", shouldFetch)
+			console.log("should fetch?? ", shouldFetch)
 			setLoading(true)
 			const fetchGoals = async () => {
 				const goals = await getTasks(collectionID);
@@ -128,7 +128,7 @@ export default function Todo() {
 					{items.map(item => {
 						const randomNum = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
 
-						return item.done && <Card key={item._id} id={item._id} completion={randomNum} title={item.title} description={item.description} setShowUpdateModal={setShowUpdateModal} setShouldFetch={setShouldFetch} shouldFetch={shouldFetch} setUpdateID={setUpdateID} />
+						return item.done && <Card key={item._id} id={item._id} done={item.done} completion={randomNum} title={item.title} description={item.description} setShowUpdateModal={setShowUpdateModal} setShouldFetch={setShouldFetch} shouldFetch={shouldFetch} setUpdateID={setUpdateID} />
 					})}
 				</div>
 			</div>

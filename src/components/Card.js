@@ -8,13 +8,14 @@ import Remove from "../assets/Remove.svg";
 import { updateTask, removeTask } from "../api";
 
 export default function Card(props) {
-	const { title, description, id, setShouldFetch, setShowUpdateModal, setUpdateID, completion } = props;
+	const { title, description, id, setShouldFetch, setShowUpdateModal, setUpdateID, completion, done } = props;
 
-	const [checked, setChecked] = useState(false);
+	const [checked, setChecked] = useState(done);
 
 	const fetchUpdateTask = async (id, done) => {
 		const res = await updateTask(id, { done });
-		if(res.message !== "Task updated succesfully") alert("Something went wrong");
+		console.log("DONE?: ", done);
+		// if(res.message !== "Task updated succesfully") alert("Something went wrong");
 	}
 
 	return (
@@ -23,10 +24,11 @@ export default function Card(props) {
 				<div className="flex items-center justify-center">
 					<input
 						type="checkbox"
+						defaultChecked={done}
 						onChange={() => {
 							// do put fetch updateTask
 							setChecked(!checked);
-							fetchUpdateTask(id, checked);
+							fetchUpdateTask(id, !checked);
 							setShouldFetch(true);
 						}}
 						className="w-6 h-6 form-tick appearance-none rounded-full cursor-pointer checked:bg-cyan border-2 border-cyan checked:light-bg checked:border-transparent focus:outline-none"
