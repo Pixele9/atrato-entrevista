@@ -8,7 +8,7 @@ import Remove from "../assets/Remove.svg";
 import { removeTask } from "../api";
 
 export default function Card(props) {
-	const { title, description, id, setShouldFetch, setShowUpdateModal, setUpdateID, completed } = props;
+	const { title, description, id, setShouldFetch, setShowUpdateModal, setUpdateID, completion } = props;
 
 	const [checked, setChecked] = useState(false);
 
@@ -52,7 +52,7 @@ export default function Card(props) {
 					</div>
 				</div>
 			</div>
-			<ProgressBar completed={completed} />
+			<ProgressBar completed={completion} />
 		</div>
 	);
 }
