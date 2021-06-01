@@ -111,9 +111,11 @@ export default function Todo() {
 					<h3 className="text-lg font-bold mt-8">Tasks - { taskCount }</h3>
 				</div>
 				<div className="task-container flex flex-col w-1/2 items-center mb-12">
-					{items.map(item => (
-						!item.done && <Card key={item._id} id={item._id} title={item.title} description={item.description} setShowUpdateModal={setShowUpdateModal} setShouldFetch={setShouldFetch} shouldFetch={shouldFetch} setUpdateID={setUpdateID} />
-					))}
+					{items.map(item => {
+						const randomNum = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
+
+						return !item.done && <Card key={item._id} id={item._id} completed={randomNum} title={item.title} description={item.description} setShowUpdateModal={setShowUpdateModal} setShouldFetch={setShouldFetch} shouldFetch={shouldFetch} setUpdateID={setUpdateID} />
+					})}
 				</div>
 			</div>
 		</div>
