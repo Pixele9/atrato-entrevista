@@ -5,12 +5,17 @@ import ProgressBar from "./ProgressBar";
 import Edit from "../assets/Edit.svg";
 import Remove from "../assets/Remove.svg";
 
-import { removeTask } from "../api";
+import { updateTask, removeTask } from "../api";
 
 export default function Card(props) {
 	const { title, description, id, setShouldFetch, setShowUpdateModal, setUpdateID, completion } = props;
 
 	const [checked, setChecked] = useState(false);
+
+	const fetchUpdateTask = async (id, done) => {
+		const res = await updateTask(id, { done });
+		if(res.message !== "Task updated succesfully") alert("Something went wrong");
+	}
 
 	return (
 		<div className="w-full h-22 light-bg rounded-xl shadow-2xl flex flex-col mt-4">
@@ -19,7 +24,9 @@ export default function Card(props) {
 					<input
 						type="checkbox"
 						onChange={() => {
+							// do put fetch updateTask
 							setChecked(!checked);
+							fetchUpdateTask(id, checked);
 							setShouldFetch(true);
 						}}
 						className="w-6 h-6 form-tick appearance-none rounded-full cursor-pointer checked:bg-cyan border-2 border-cyan checked:light-bg checked:border-transparent focus:outline-none"

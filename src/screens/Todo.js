@@ -15,6 +15,7 @@ export default function Todo() {
 	const [ isLoading, setLoading ] = useState(false);
 	const [ items, setItems ] = useState([]);
 	const [ taskCount, setTaskCount ] = useState(0);
+	const [ taskDoneCount, setTaskDoneCount ] = useState(0);
 	const [ showModal, setShowModal ] = useState(false);
 	const [ showUpdateModal, setShowUpdateModal ] = useState(false);
 	const [ shouldFetch, setShouldFetch ] = useState(false);
@@ -28,9 +29,10 @@ export default function Todo() {
 			setLoading(true)
 			const fetchGoals = async () => {
 				const goals = await getTasks(collectionID);
-				console.log("GOALS: ", goals)
-				setItems(goals.todos)
-				setTaskCount(goals.count)
+				console.log("GOALS: ", goals);
+				setItems(goals.todos);
+				setTaskCount(goals.count);
+				setTaskDoneCount(goals.doneCount);
 			}
 			fetchGoals();
 			setShouldFetch(false);
@@ -44,6 +46,7 @@ export default function Todo() {
 			console.log("GOALS: ", goals)
 			setItems(goals.todos)
 			setTaskCount(goals.count)
+			setTaskDoneCount(goals.doneCount);
 		}
 		fetchGoals();
 	}, [collectionID, collectionName])
@@ -56,6 +59,7 @@ export default function Todo() {
 			console.log("GOALS: ", goals)
 			setItems(goals.todos)
 			setTaskCount(goals.count)
+			setTaskDoneCount(goals.doneCount);
 		}
 		fetchGoals();
 
@@ -108,13 +112,23 @@ export default function Todo() {
 				}}>New Task</button> */}
 
 				<div className="flex justify-start w-1/2">
-					<h3 className="text-lg font-bold mt-8">Tasks - { taskCount }</h3>
+					<h3 className="text-lg font-bold mt-8">Tasks - { taskDoneCount }</h3>
 				</div>
 				<div className="task-container flex flex-col w-1/2 items-center mb-12">
 					{items.map(item => {
 						const randomNum = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
 
 						return !item.done && <Card key={item._id} id={item._id} completion={randomNum} title={item.title} description={item.description} setShowUpdateModal={setShowUpdateModal} setShouldFetch={setShouldFetch} shouldFetch={shouldFetch} setUpdateID={setUpdateID} />
+					})}
+				</div>
+				<div className="flex justify-start w-1/2">
+					<h3 className="text-lg font-bold mt-8">Completed - { taskCount - taskDoneCount }</h3>
+				</div>
+				<div className="task-container flex flex-col w-1/2 items-center mb-12">
+					{items.map(item => {
+						const randomNum = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
+
+						return item.done && <Card key={item._id} id={item._id} completion={randomNum} title={item.title} description={item.description} setShowUpdateModal={setShowUpdateModal} setShouldFetch={setShouldFetch} shouldFetch={shouldFetch} setUpdateID={setUpdateID} />
 					})}
 				</div>
 			</div>

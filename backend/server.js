@@ -33,8 +33,10 @@ app.get("/collections", async (req, res) => {
 app.get("/collections/:id", (req, res) => {
   const id = req.params.id
   Models.Todo.find({ category: id }, (err, todos) => {
+    let doneCount = 0;
+    todos.forEach(el => {if(el.done === false) doneCount++;})
     if(err) console.log("ERROR: ", err)
-    else res.json({ todos, count: todos.length })
+    else res.json({ todos, count: todos.length, doneCount })
   })
 })
 
@@ -74,7 +76,7 @@ app.put("/:id", async (req, res) => {
       new: true,
       runValidators: true
     })
-    return res.status(204)
+    return res.json({ message: "Task updated succesfully" })
   }
 })
 
