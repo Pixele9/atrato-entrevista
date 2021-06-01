@@ -32,8 +32,6 @@ export default function Collections() {
 		}
 	}, [shouldFetch, setShouldFetch])
 
-
-
 	return (
 		<div className="flex flex-grow">
 			<Modal showModal={showModal} setShowModal={setShowModal} shouldFetch={shouldFetch} setShouldFetch={setShouldFetch} modifierName="Collection"/>
@@ -46,7 +44,7 @@ export default function Collections() {
 				</div>
 				<div className="mt-8 w-full h-full flex flex-col items-center">
 					{collections.map(item => (
-						<Card title={item.name} description={item.description} routeName={item.name} routeID={item._id} />
+						<Card key={item._id} title={item.name} description={item.description} routeName={item.name} routeID={item._id} />
 					))}
 				</div>
 			</div>

@@ -42,6 +42,8 @@ export default function Navbar() {
 					</div>
 				))}
 			</div>
+
+			<button className="w-3/4 bg-cyan text-black p-2 rounded-xl h-12">New Collection</button>
 		</div>
 	);
 }
